@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harini Tatakuntla - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        /* Header shrink animation on scroll */
+        .header.scrolled {
+            padding: 10px 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav a {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        /* Underline animation for nav links */
+        .nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #8a2be2;
+            transition: width 0.3s ease;
+        }
+        
+        .nav a:hover::after {
+            width: 100%;
+        }
+        
+        .nav a:hover {
+            color: #8a2be2;
+        }
+        
+        /* Removed purple line */
+        
+        .home-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        /* Home section animations */
+        .hello {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .name {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards 0.3s;
+        }
+        
+        .tagline {
+            font-size: 20px;
+            max-width: 700px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards 0.6s;
+        }
+        
+        .about-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .about-left {
+            flex: 1;
+            background-color: #f0f2f5;
+            padding: 50px;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        
+        .about-right {
+            flex: 1;
+            background-color: white;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        
+        .about-title {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .about-text {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .placeholder-img {
+            width: 275px;
+            height: 275px;
+            margin-bottom: 20px;
+            border-radius: 5%;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+        
+        .placeholder-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .placeholder-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: filter 0.3s ease;
+        }
+        
+        .placeholder-img:hover img {
+            filter: brightness(1.1);
+        }
+        
+        .contact-info {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Skills Section Styles */
+        .skills-container {
+            min-height: 100vh;
+            padding: 50px;
+            background-color: #f0f2f5;
+        }
+        
+        .skills-title {
+            font-size: 36px;
+            margin-bottom: 50px;
+            opacity: 0;
+        }
+        
+        .skills-content {
+            display: flex;
+            justify-content: space-between;
+            gap: 50px;
+        }
+        
+        .technical-skills {
+            flex: 1;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .soft-skills {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .tech-skill {
+            margin-bottom: 30px;
+        }
+        
+        .skill-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        /* Progress bar animation */
+        .progress-bar {
+            height: 100%;
+            background-color: #7b9dbb;
+            border-radius: 10px;
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .soft-skill-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 150px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        
+        .soft-skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .soft-skill-card svg {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .soft-skill-card:hover svg {
+            transform: scale(1.2);
+            color: #8a2be2;
+        }
+        
+        .soft-skill-title {
+            font-weight: bold;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        
+        /* Projects Section Styles */
+        .projects-container {
+            min-height: 100vh;
+            padding: 50px;
+            background-color: #f0f2f5;
+        }
+        
+        .projects-title {
+            font-size: 36px;
+            margin-bottom: 50px;
+            opacity: 0;
+        }
+        
+        .projects-grid {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 45%;
+            padding-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+        
+        .project-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .project-link, .project-description {
+            text-align: center;
+            margin: 15px 0;
+            padding: 0 20px;
+        }
+        
+        .project-link a {
+            color: #8a2be2;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .project-link a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background-color: #8a2be2;
+            transition: width 0.3s ease;
+        }
+        
+        .project-link a:hover::after {
+            width: 100%;
+        }
+        
+        /* Contact Section Styles */
+        .contact-container {
+            min-height: 100vh;
+            padding: 50px;
+            background-color: #f0f2f5;
+        }
+        
+        .contact-title {
+            font-size: 36px;
+            margin-bottom: 50px;
+            opacity: 0;
+        }
+        
+        .contact-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .contact-icon {
+            margin-right: 20px;
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1);
+        }
+        
+        .contact-text {
+            font-size: 18px;
+        }
+        
+        .contact-text a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-text a:hover {
+            color: #8a2be2;
+        }
+        
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 15px;
+        }
+        
+        .social-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-button:hover {
+            background-color: #8a2be2;
+            transform: translateY(-5px);
+        }
+        
+        /* Keyframes for animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0) translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="header">
+        <div class="logo">PORTFOLIO</div>
+        <div class="nav">
+            <a href="#home">HOME</a>
+            <a href="#about">ABOUT ME</a>
+            <a href="#skills">SKILLS</a>
+            <a href="#projects">PROJECTS</a>
+            <a href="#contact">CONTACT</a>
+        </div>
+    </div>
+    <!-- Removed purple line -->
+    
+    <!-- Home Page -->
+    <div id="home" class="home-container">
+        <h1 class="hello">Hello!</h1>
+        <h2 class="name">I'm Harini Tatakuntla</h2>
+        <p class="tagline">A sophomore exploring how small ideas can create big impact.</p>
+    </div>
+    
+    <!-- About Page -->
+    <div id="about" class="about-container">
+        <div class="about-left fade-in">
+            <h2 class="about-title">About me</h2>
+            <p class="about-text">
+                Hi! I'm Harini Tatakuntla, a sophomore majoring in Computer Science at G. Narayanamma Institute of Technology and Science in Hyderabad, Telangana, India.
+                <br><br>
+                I may be a beginner in coding, but my imagination and curiosity are limitless.
+                <br><br>
+                I'm a fast learner—especially when something genuinely excites me. I enjoy building dynamic, user-interactive projects that bring ideas to life. Beyond tech, I'm also a passionate artist and crocheter who loves exploring creativity in all its forms.
+            </p>
+        </div>
+        <div class="about-right fade-in">
+            <div class="placeholder-img">
+                <img src="https://media.licdn.com/dms/image/v2/D5603AQHiOgz_InrClQ/profile-displayphoto-shrink_800_800/B56ZRg.uzkGsAk-/0/1736793847328?e=1750896000&v=beta&t=5iJW4Ps9nQBW0h6RpzM674dRnTIhc7NXIWTKGKVon0I" alt="Harini Tatakuntla"/>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Skills Page -->
+    <div id="skills" class="skills-container">
+        <h2 class="skills-title fade-in">Skills</h2>
+        <div class="skills-content">
+            <div class="technical-skills fade-in">
+                <h3 class="section-title">Technical Skills</h3>
+                
+                <div class="tech-skill">
+                    <div class="skill-name">Java 50%</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" data-width="50%"></div>
+                    </div>
+                </div>
+                
+                <div class="tech-skill">
+                    <div class="skill-name">C programming 80%</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" data-width="80%"></div>
+                    </div>
+                </div>
+                
+                <div class="tech-skill">
+                    <div class="skill-name">Python 30%</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" data-width="30%"></div>
+                    </div>
+                </div>
+                
+                <div class="tech-skill">
+                    <div class="skill-name">HTML, CSS, JS 50%</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" data-width="50%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="soft-skills fade-in">
+                <h3 class="section-title">Soft Skills</h3>
+                
+                <div class="soft-skill-card" data-delay="0">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <div class="soft-skill-title">clear communication</div>
+                </div>
+                
+                <div class="soft-skill-card" data-delay="0.2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                    <div class="soft-skill-title">creative thinking</div>
+                </div>
+                
+                <div class="soft-skill-card" data-delay="0.4">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <div class="soft-skill-title">time management</div>
+                </div>
+                
+                <div class="soft-skill-card" data-delay="0.6">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <div class="soft-skill-title">team work</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Projects Page -->
+    <div id="projects" class="projects-container">
+        <h2 class="projects-title fade-in">Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card" data-delay="0">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ04HyzQ1x41KdCCV9KCHaeRdVvRszAP2Zc9A&s" alt="LunaCare Project" class="project-image" style="background-color: #d8a2c4;">
+                <h3 class="project-title">LunaCare - a girl health chatbot</h3>
+                <div class="project-link">
+                     <a href="https://github.com/harinitata/LunaCare-">link to github repo</a>
+                </div>
+                <div class="project-description">
+                    <p>LunaCare is a web-based platform designed to empower women by providing accessible and supportive health information, focusing on an intelligent chatbot. Addressing the challenges women face in finding reliable and empathetic resources, particularly concerning menstruation, PCOD, PCOS, Breast health, LunaCare offers a safe space for users to get their questions answered and receive helpful guidance. The chatbot leverages natural language processing to deliver a friendly, informative, and supportive experience.</p>
+                </div>
+            </div>
+            
+            <div class="project-card" data-delay="0.3">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROAJpUNTs15dI5r8hNQV141RQgxGihESbIZg&s" alt="PointRisk Project" class="project-image" style="background-color: #3c7a3c;">
+                <h3 class="project-title">PointRisk - forest fire prediction system</h3>
+                <div class="project-link">
+                     <a href="https://github.com/harinitata/forest_fire_prediction">link to github repo</a>
+                </div>
+                <div class="project-description">
+                    <p>Built a web-based Forest Fire Prediction System that forecasts wildfire risk using real-time weather data. The system integrates a Flask backend with a machine learning model (Random Forest Classifier) trained on environmental data like temperature, humidity, and wind speed. A user-friendly frontend built with HTML and Tailwind CSS allows users to input city names and view wildfire risk along with current weather conditions in a visually appealing dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="contact" class="contact-container">
+        <h2 class="contact-title fade-in">Contact</h2>
+        <div class="contact-card fade-in">
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </div>
+                <div class="contact-text">harinitatakuntla@gmail.com</div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </div>
+                <div class="contact-text">+91 6300719029</div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <svg viewBox="0 0 24 24" fill="#0A66C2">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div>
+                <div class="contact-text"><a href="https://www.linkedin.com/in/harini-tatakuntla-" target="_blank" rel="noopener noreferrer">Harini Tatakuntla</a></div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/1200px-GitHub_Invertocat_Logo.svg.png" alt="GitHub Icon" style="width: 40px; height: 40px;">
+                </div>
+                <div class="contact-text"><a href="https://github.com/harinitata" target="_blank" rel="noopener noreferrer">harini tata</a></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Header shrink on scroll
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.header');
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Intersection Observer for fade-in animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        
+                        // Animate progress bars when they come into view
+                        if (entry.target.classList.contains('technical-skills')) {
+                            setTimeout(() => {
+                                const progressBars = document.querySelectorAll('.progress-bar');
+                                progressBars.forEach(bar => {
+                                    const width = bar.getAttribute('data-width');
+                                    bar.style.width = width;
+                                });
+                            }, 300);
+                        }
+                        
+                        // Animate soft skill cards
+                        if (entry.target.classList.contains('soft-skills')) {
+                            const cards = document.querySelectorAll('.soft-skill-card');
+                            cards.forEach((card, index) => {
+                                const delay = parseFloat(card.getAttribute('data-delay')) || 0;
+                                setTimeout(() => {
+                                    card.style.opacity = '1';
+                                    card.style.transform = 'scale(1)';
+                                }, delay * 1000);
+                            });
+                        }
+                        
+                        // Animate project cards
+                        if (entry.target.classList.contains('projects-title')) {
+                            const cards = document.querySelectorAll('.project-card');
+                            cards.forEach((card, index) => {
+                                const delay = parseFloat(card.getAttribute('data-delay')) || 0;
+                                setTimeout(() => {
+                                    card.style.opacity = '1';
+                                    card.style.transform = 'translateY(0)';
+                                }, delay * 1000);
+                            });
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Observe all elements with fade-in class
+            document.querySelectorAll('.fade-in').forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Observe other animated elements
+            document.querySelectorAll('.skills-title, .projects-title, .contact-title, .contact-card').forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Add hover effect to project cards for mobile devices
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach(card => {
+                card.addEventListener('touchstart', function() {
+                    this.style.transform = 'translateY(-10px)';
+                    this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.1)';
+                });
+                card.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
